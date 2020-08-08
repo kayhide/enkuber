@@ -1,0 +1,51 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.33.0.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: 4b985e2fc690328054f607dcfc2952f058ce50c221776d49106e211cbf1b0fdb
+
+name:           enkuber
+version:        0.1.0.0
+category:       Web
+homepage:       https://github.com/githubuser/enkuber
+author:         Author name here
+maintainer:     example@example.com
+copyright:      2020 Author name here
+license:        BSD3
+license-file:   LICENSE
+build-type:     Simple
+extra-source-files:
+    README.md
+
+executable enkuber
+  main-is: Main.hs
+  other-modules:
+      DevMain
+      Paths_enkuber
+  hs-source-dirs:
+      src
+  default-extensions: BangPatterns BinaryLiterals ConstraintKinds DataKinds DefaultSignatures DeriveAnyClass DeriveDataTypeable DeriveFoldable DeriveFunctor DeriveGeneric DeriveTraversable DoAndIfThenElse DuplicateRecordFields EmptyDataDecls ExistentialQuantification FlexibleContexts FlexibleInstances FunctionalDependencies GADTs GeneralizedNewtypeDeriving InstanceSigs KindSignatures LambdaCase MultiParamTypeClasses MultiWayIf NamedFieldPuns NoImplicitPrelude OverloadedLabels OverloadedLists OverloadedStrings PartialTypeSignatures PatternGuards PolyKinds RankNTypes RecordWildCards ScopedTypeVariables StandaloneDeriving TupleSections TypeApplications TypeFamilies TypeOperators TypeSynonymInstances ViewPatterns
+  build-depends:
+      async
+    , base
+    , bytestring
+    , classy-prelude
+    , containers
+    , deepseq
+    , directory
+    , exceptions
+    , filepath
+    , mtl
+    , primitive
+    , stm
+    , text
+    , time
+    , transformers
+    , typed-process
+    , unliftio
+    , unliftio-core
+    , unordered-containers
+    , vector
+  default-language: Haskell2010
