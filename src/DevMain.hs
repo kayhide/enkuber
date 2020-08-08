@@ -2,6 +2,8 @@ module DevMain where
 
 import ClassyPrelude
 
+import qualified Enkuber
+
 run :: IO ()
 run =
-  putStrLn "[dev] Hello World"
+  Enkuber.run

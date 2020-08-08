@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 4b985e2fc690328054f607dcfc2952f058ce50c221776d49106e211cbf1b0fdb
+-- hash: bd1f613451abd9a08417776b30158ad79c9df75fecac77078ad0053a52b15aaa
 
 name:           enkuber
 version:        0.1.0.0
@@ -23,12 +23,15 @@ executable enkuber
   main-is: Main.hs
   other-modules:
       DevMain
+      Enkuber
+      Kube.Template
       Paths_enkuber
   hs-source-dirs:
       src
   default-extensions: BangPatterns BinaryLiterals ConstraintKinds DataKinds DefaultSignatures DeriveAnyClass DeriveDataTypeable DeriveFoldable DeriveFunctor DeriveGeneric DeriveTraversable DoAndIfThenElse DuplicateRecordFields EmptyDataDecls ExistentialQuantification FlexibleContexts FlexibleInstances FunctionalDependencies GADTs GeneralizedNewtypeDeriving InstanceSigs KindSignatures LambdaCase MultiParamTypeClasses MultiWayIf NamedFieldPuns NoImplicitPrelude OverloadedLabels OverloadedLists OverloadedStrings PartialTypeSignatures PatternGuards PolyKinds RankNTypes RecordWildCards ScopedTypeVariables StandaloneDeriving TupleSections TypeApplications TypeFamilies TypeOperators TypeSynonymInstances ViewPatterns
   build-depends:
-      async
+      aeson
+    , async
     , base
     , bytestring
     , classy-prelude
@@ -37,8 +40,11 @@ executable enkuber
     , directory
     , exceptions
     , filepath
+    , lens
+    , lens-aeson
     , mtl
     , primitive
+    , stache
     , stm
     , text
     , time

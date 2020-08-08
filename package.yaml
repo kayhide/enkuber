@@ -12,6 +12,7 @@ extra-source-files:
   - README.md
 
 dependencies:
+  - aeson
   - async
   - base
   - bytestring
@@ -21,8 +22,11 @@ dependencies:
   - directory
   - exceptions
   - filepath
+  - lens
+  - lens-aeson
   - mtl
   - primitive
+  - stache
   - stm
   - text
   - time
