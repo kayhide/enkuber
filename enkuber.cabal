@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: bd1f613451abd9a08417776b30158ad79c9df75fecac77078ad0053a52b15aaa
+-- hash: d023934750bdea08392113e9ca06de066548fe6a3205c0e52fafabfe1d779b7b
 
 name:           enkuber
 version:        0.1.0.0
@@ -19,16 +19,17 @@ build-type:     Simple
 extra-source-files:
     README.md
 
-executable enkuber
-  main-is: Main.hs
-  other-modules:
+library
+  exposed-modules:
       DevMain
       Enkuber
+      Enkuber.Service
       Kube.Template
+  other-modules:
       Paths_enkuber
   hs-source-dirs:
       src
-  default-extensions: BangPatterns BinaryLiterals ConstraintKinds DataKinds DefaultSignatures DeriveAnyClass DeriveDataTypeable DeriveFoldable DeriveFunctor DeriveGeneric DeriveTraversable DoAndIfThenElse DuplicateRecordFields EmptyDataDecls ExistentialQuantification FlexibleContexts FlexibleInstances FunctionalDependencies GADTs GeneralizedNewtypeDeriving InstanceSigs KindSignatures LambdaCase MultiParamTypeClasses MultiWayIf NamedFieldPuns NoImplicitPrelude OverloadedLabels OverloadedLists OverloadedStrings PartialTypeSignatures PatternGuards PolyKinds RankNTypes RecordWildCards ScopedTypeVariables StandaloneDeriving TupleSections TypeApplications TypeFamilies TypeOperators TypeSynonymInstances ViewPatterns
+  default-extensions: BangPatterns BinaryLiterals BlockArguments ConstraintKinds DataKinds DefaultSignatures DeriveAnyClass DeriveDataTypeable DeriveFoldable DeriveFunctor DeriveGeneric DeriveTraversable DoAndIfThenElse DuplicateRecordFields EmptyDataDecls ExistentialQuantification FlexibleContexts FlexibleInstances FunctionalDependencies GADTs GeneralizedNewtypeDeriving InstanceSigs KindSignatures LambdaCase MultiParamTypeClasses MultiWayIf NamedFieldPuns NoImplicitPrelude OverloadedLabels OverloadedLists OverloadedStrings PartialTypeSignatures PatternGuards PolyKinds RankNTypes RecordWildCards ScopedTypeVariables StandaloneDeriving TupleSections TypeApplications TypeFamilies TypeOperators TypeSynonymInstances ViewPatterns
   build-depends:
       aeson
     , async
@@ -46,6 +47,89 @@ executable enkuber
     , primitive
     , stache
     , stm
+    , text
+    , time
+    , transformers
+    , typed-process
+    , unliftio
+    , unliftio-core
+    , unordered-containers
+    , vector
+  default-language: Haskell2010
+
+executable enkuber
+  main-is: Main.hs
+  other-modules:
+      Paths_enkuber
+  hs-source-dirs:
+      app
+  default-extensions: BangPatterns BinaryLiterals BlockArguments ConstraintKinds DataKinds DefaultSignatures DeriveAnyClass DeriveDataTypeable DeriveFoldable DeriveFunctor DeriveGeneric DeriveTraversable DoAndIfThenElse DuplicateRecordFields EmptyDataDecls ExistentialQuantification FlexibleContexts FlexibleInstances FunctionalDependencies GADTs GeneralizedNewtypeDeriving InstanceSigs KindSignatures LambdaCase MultiParamTypeClasses MultiWayIf NamedFieldPuns NoImplicitPrelude OverloadedLabels OverloadedLists OverloadedStrings PartialTypeSignatures PatternGuards PolyKinds RankNTypes RecordWildCards ScopedTypeVariables StandaloneDeriving TupleSections TypeApplications TypeFamilies TypeOperators TypeSynonymInstances ViewPatterns
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      aeson
+    , async
+    , base
+    , bytestring
+    , classy-prelude
+    , containers
+    , deepseq
+    , directory
+    , enkuber
+    , exceptions
+    , filepath
+    , lens
+    , lens-aeson
+    , mtl
+    , primitive
+    , stache
+    , stm
+    , text
+    , time
+    , transformers
+    , typed-process
+    , unliftio
+    , unliftio-core
+    , unordered-containers
+    , vector
+  default-language: Haskell2010
+
+test-suite enkuber-tasty
+  type: exitcode-stdio-1.0
+  main-is: Main.hs
+  other-modules:
+      Test.Enkuber
+      Test.Enkuber.Service
+      Paths_enkuber
+  hs-source-dirs:
+      test/tasty
+  default-extensions: BangPatterns BinaryLiterals BlockArguments ConstraintKinds DataKinds DefaultSignatures DeriveAnyClass DeriveDataTypeable DeriveFoldable DeriveFunctor DeriveGeneric DeriveTraversable DoAndIfThenElse DuplicateRecordFields EmptyDataDecls ExistentialQuantification FlexibleContexts FlexibleInstances FunctionalDependencies GADTs GeneralizedNewtypeDeriving InstanceSigs KindSignatures LambdaCase MultiParamTypeClasses MultiWayIf NamedFieldPuns NoImplicitPrelude OverloadedLabels OverloadedLists OverloadedStrings PartialTypeSignatures PatternGuards PolyKinds RankNTypes RecordWildCards ScopedTypeVariables StandaloneDeriving TupleSections TypeApplications TypeFamilies TypeOperators TypeSynonymInstances ViewPatterns
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      QuickCheck
+    , aeson
+    , async
+    , base
+    , bytestring
+    , classy-prelude
+    , containers
+    , deepseq
+    , directory
+    , enkuber
+    , exceptions
+    , filepath
+    , lens
+    , lens-aeson
+    , mtl
+    , primitive
+    , quickcheck-instances
+    , stache
+    , stm
+    , tasty
+    , tasty-discover
+    , tasty-golden
+    , tasty-hspec
+    , tasty-hunit
+    , tasty-quickcheck
     , text
     , time
     , transformers

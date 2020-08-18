@@ -4,8 +4,8 @@ import ClassyPrelude
 
 import Data.Aeson ((.=))
 import qualified Data.Aeson as Aeson
+import Enkuber.Service
 import qualified Kube.Template as Kube
-import System.Directory (doesDirectoryExist, doesFileExist, listDirectory)
 import System.Process.Typed (readProcess_, setWorkingDir)
 import Text.Mustache (renderMustache)
 
@@ -13,50 +13,29 @@ run :: IO ()
 run = do
   putStrLn "Enkuber!"
 
-  services <- sortOn name <$> findServices simplestDir
+  services <- findServices simplestDir
 
   let
-    xs = createKubeManifest <$> services
+    project' = Project "Simple" "docker.io/kayhide/enkuber"
+    xs = createKubeManifest project' <$> services
   traverse_ say xs
 
 
 
-project :: Text
-project = "Simplest"
-
 simplestDir :: FilePath
 simplestDir = "./test/fixtures/apps/simplest"
 
-image :: Text
-image = "docker.io/kayhide/enkuber"
-
-
-data Service
-  = Service
-  { name       :: Text
-  , path       :: FilePath
-  , dockerfile :: FilePath
-  , image_tag  :: Text
+data Project
+  = Project
+  { project :: Text
+  , image :: Text
   }
   deriving (Eq, Show, Generic)
 
-findServices :: FilePath -> IO [Service]
-findServices dir = do
-  let fromName x = do
-        let
-          name = pack x
-          path = dir </> x
-          dockerfile = dir </> x </> "Dockerfile"
-          image_tag = "simplest-" <> name
-        bool Nothing (Just Service {..}) <$> doesFileExist dockerfile
-
-  xs <- traverse fromName =<< listDirectory dir
-  pure $ catMaybes xs
-
-
-buildImage :: Service -> IO ()
-buildImage Service { path, image_tag } = do
+buildImage :: Project -> Service -> IO ()
+buildImage Project { project, image } Service { name, path } = do
   let
+    image_tag = intercalate "-" ([toLower project, toLower name] :: [Text])
     command = "docker build --tag " <> image <> ":" <> image_tag <> " ."
   say command
   (out, err) <- readProcess_
@@ -66,9 +45,10 @@ buildImage Service { path, image_tag } = do
   say $ toStrict $ decodeUtf8 out
   say $ toStrict $ decodeUtf8 err
 
-createKubeManifest :: Service -> Text
-createKubeManifest Service {..} = do
+createKubeManifest :: Project -> Service -> Text
+createKubeManifest Project {..} Service {..} = do
   let
+    image_tag = "simplest-" <> name
     obj = Aeson.object
       [ "name" .= name
       , "image" .= image
